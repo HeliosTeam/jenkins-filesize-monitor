@@ -20,15 +20,18 @@ import org.kohsuke.stapler.DataBoundConstructor;
 // XXX Javadoc
 public class FileSizeMonitor extends Builder {
 
-    private final Config config;
+    private final List<Entry> paths;
 
     @DataBoundConstructor
-    public FileSizeMonitor(Config config) {
-        this.config = config;
+    public FileSizeMonitor(List<Entry> paths) {
+        this.paths = paths != null ? new ArrayList<Entry>(paths) : Collections.<Entry>emptyList();
+        if (this.paths.isEmpty()) {
+            this.paths.add(new Entry(""));
+        }
     }
 
-    public Config getConfig() {
-        return config;
+    public List<Entry> getPaths() {
+        return Collections.unmodifiableList(paths);
     }
 
     @Override
@@ -56,80 +59,25 @@ public class FileSizeMonitor extends Builder {
         }
     }
 
-    public static final class Config extends AbstractDescribableImpl<Config> {
+    public static final class Entry extends AbstractDescribableImpl<Entry> {
 
-        private final List<Entry> entries;
+        private final String path;
 
         @DataBoundConstructor
-        public Config(List<Entry> entries) {
-            this.entries = entries != null ? new ArrayList<Entry>(entries) : Collections.<Entry>emptyList();
+        public Entry(String path) {
+            this.path = path;
         }
 
-        public List<Entry> getEntries() {
-            return Collections.unmodifiableList(entries);
+        public String getPath() {
+            return path;
         }
 
         @Extension
-        public static class DescriptorImpl extends Descriptor<Config> {
+        public static class DescriptorImpl extends Descriptor<Entry> {
 
             @Override
             public String getDisplayName() {
                 return "";
-            }
-        }
-    }
-
-    public static abstract class Entry extends AbstractDescribableImpl<Entry> {
-    }
-
-    public static final class FileEntry extends Entry {
-
-        private final String path;
-
-        @DataBoundConstructor
-        public FileEntry(String path) {
-            this.path = path;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        @Extension
-        public static class DescriptorImpl extends Descriptor<Entry> {
-
-            @Override
-            public String getDisplayName() {
-                return "File";
-            }
-        }
-    }
-
-    public static final class DirectoryEntry extends Entry {
-
-        private final String path;
-        private final String filter;
-
-        @DataBoundConstructor
-        public DirectoryEntry(String path, String filter) {
-            this.path = path;
-            this.filter = filter;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public String getFilter() {
-            return filter;
-        }
-
-        @Extension
-        public static class DescriptorImpl extends Descriptor<Entry> {
-
-            @Override
-            public String getDisplayName() {
-                return "Directory";
             }
         }
     }
