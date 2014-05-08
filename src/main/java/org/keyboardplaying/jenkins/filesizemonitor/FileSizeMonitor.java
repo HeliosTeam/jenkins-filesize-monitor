@@ -36,18 +36,15 @@ import org.kohsuke.stapler.DataBoundConstructor;
 // XXX Javadoc
 public class FileSizeMonitor extends Builder {
 
-    private final List<Entry> paths;
+    private final String filters;
 
     @DataBoundConstructor
-    public FileSizeMonitor(List<Entry> paths) {
-        this.paths = paths != null ? new ArrayList<Entry>(paths) : Collections.<Entry>emptyList();
-        if (this.paths.isEmpty()) {
-            this.paths.add(new Entry(""));
-        }
+    public FileSizeMonitor(String filters) {
+        this.filters = filters;
     }
 
-    public List<Entry> getPaths() {
-        return Collections.unmodifiableList(paths);
+    public String getFilters() {
+        return filters;
     }
 
     @Override
@@ -72,29 +69,6 @@ public class FileSizeMonitor extends Builder {
         @Override
         public String getDisplayName() {
             return "Monitor file size";
-        }
-    }
-
-    public static final class Entry extends AbstractDescribableImpl<Entry> {
-
-        private final String path;
-
-        @DataBoundConstructor
-        public Entry(String path) {
-            this.path = path;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        @Extension
-        public static class DescriptorImpl extends Descriptor<Entry> {
-
-            @Override
-            public String getDisplayName() {
-                return "";
-            }
         }
     }
 }
