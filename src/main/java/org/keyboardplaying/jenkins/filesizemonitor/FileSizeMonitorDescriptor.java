@@ -25,6 +25,7 @@ import hudson.tasks.Publisher;
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // XXX Javadoc
+// TODO i18n
 @Extension
 public final class FileSizeMonitorDescriptor extends BuildStepDescriptor<Publisher> {
 

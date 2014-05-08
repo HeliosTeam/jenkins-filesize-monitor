@@ -29,9 +29,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
  */
 // XXX Javadoc
 public class FileSizeMonitor extends Recorder {
-    
-    private static final String PATH_SEPARATOR = ",";
 
+    private static final String PATH_SEPARATOR = ",";
     private final String paths;
 
     @DataBoundConstructor
@@ -51,9 +50,12 @@ public class FileSizeMonitor extends Recorder {
         for (String path : getPaths().split(PATH_SEPARATOR)) {
             logger.println(" - " + path.trim());
         }
-        
+
         // TODO evaluate files size
         // store file size
+
+        final FilesizeResult result = new FilesizeResult((int) (Math.random() * 10) + 1, build);
+        build.addAction(new FilesizeAction(result));
 
         return true;
     }
