@@ -29,6 +29,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
  */
 // XXX Javadoc
 public class FileSizeMonitor extends Recorder {
+    
+    private static final String PATH_SEPARATOR = ",";
 
     private final String paths;
 
@@ -46,7 +48,7 @@ public class FileSizeMonitor extends Recorder {
         PrintStream logger = listener.getLogger();
 
         logger.println("[Filesize monitor] paths to monitor: ");
-        for (String path : getPaths().split(",")) {
+        for (String path : getPaths().split(PATH_SEPARATOR)) {
             logger.println(" - " + path.trim());
         }
         
