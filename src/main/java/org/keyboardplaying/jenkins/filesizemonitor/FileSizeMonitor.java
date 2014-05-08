@@ -16,59 +16,48 @@
  */
 package org.keyboardplaying.jenkins.filesizemonitor;
 
-import hudson.Extension;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
-import hudson.model.AbstractDescribableImpl;
-import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
-import hudson.model.Descriptor;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Builder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import hudson.tasks.BuildStepMonitor;
+import hudson.tasks.Recorder;
+import java.io.PrintStream;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // XXX Javadoc
-public class FileSizeMonitor extends Builder {
+public class FileSizeMonitor extends Recorder {
 
-    private final String filters;
+    private final String paths;
 
     @DataBoundConstructor
-    public FileSizeMonitor(String filters) {
-        this.filters = filters;
+    public FileSizeMonitor(String paths) {
+        this.paths = paths;
     }
 
-    public String getFilters() {
-        return filters;
+    public String getPaths() {
+        return paths;
     }
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
+        PrintStream logger = listener.getLogger();
+
+        logger.println("[Filesize monitor] paths to monitor: ");
+        for (String path : getPaths().split(",")) {
+            logger.println(" - " + path.trim());
+        }
+        
+        // TODO evaluate files size
+        // store file size
+
         return true;
     }
 
-    @Extension
-    public static final class FileSizeMonitorDescriptor extends BuildStepDescriptor<Builder> {
-
-        /** Creates a new instance. */
-        public FileSizeMonitorDescriptor() {
-            // Loads the persisted global configuration.
-            load();
-        }
-
-        @Override
-        public boolean isApplicable(Class<? extends AbstractProject> type) {
-            return true;
-        }
-
-        @Override
-        public String getDisplayName() {
-            return "Monitor file size";
-        }
+    @Override
+    public BuildStepMonitor getRequiredMonitorService() {
+        return BuildStepMonitor.BUILD;
     }
 }
