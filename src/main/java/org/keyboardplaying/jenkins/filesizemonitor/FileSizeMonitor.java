@@ -54,8 +54,8 @@ public class FileSizeMonitor extends Recorder {
         // TODO evaluate files size
         // store file size
 
-        final FilesizeResult result = new FilesizeResult((int) (Math.random() * 10) + 1, build);
-        build.addAction(new FilesizeAction(result));
+        final FileSizeResult result = new FileSizeResult((int) (Math.random() * 10) + 1, build);
+        build.addAction(new FileSizeAction(result));
 
         return true;
     }

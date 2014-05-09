@@ -23,12 +23,12 @@ import java.io.Serializable;
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // XXX Javadoc
-public class FilesizeResult implements Serializable {
+public class FileSizeResult implements Serializable {
 
     private int random;
     private AbstractBuild<?, ?> owner;
 
-    public FilesizeResult(int random, AbstractBuild<?, ?> owner) {
+    public FileSizeResult(int random, AbstractBuild<?, ?> owner) {
         this.random = random;
         this.owner = owner;
     }

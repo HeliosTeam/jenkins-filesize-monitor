@@ -25,12 +25,12 @@ import org.kohsuke.stapler.StaplerProxy;
  */
 // XXX Javadoc
 // TODO i18n
-public class FilesizeAction implements Action, Serializable, StaplerProxy {
+public class FileSizeAction implements Action, Serializable, StaplerProxy {
 
     private static final String URL = "filesize-monitor";
-    private FilesizeResult result;
+    private FileSizeResult result;
 
-    public FilesizeAction(FilesizeResult result) {
+    public FileSizeAction(FileSizeResult result) {
         this.result = result;
     }
 
@@ -50,7 +50,7 @@ public class FilesizeAction implements Action, Serializable, StaplerProxy {
     }
 
     @Override
-    public FilesizeResult getTarget() {
+    public FileSizeResult getTarget() {
         return result;
     }
 }
