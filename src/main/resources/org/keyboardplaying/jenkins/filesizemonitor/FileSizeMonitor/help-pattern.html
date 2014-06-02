@@ -15,11 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <div>
-    <p>You can use wildcards like 'module/dist/**/*.zip'. Separate paths
-        with a comma (,).</p>
-    <p>If you provide the path to a directory, the size of all files in
-        this directory and all sub-directories will be monitored.</p>
-    <p>The base directory is <a href="ws/">the workspace</a>.
-        You can only monitor the size of files that are located in your
-        workspace.</p>
+    You can use wildcards like 'module/dist/**/*.zip'.
+    See <a href="http://ant.apache.org/manual/Types/fileset.html" target="_blank">
+        the includes attribute of Ant fileset</a> for the exact format.
+    The base directory is <a href="ws/">the workspace</a>.
+    You can only monitor files that are located in your workspace.
 </div>

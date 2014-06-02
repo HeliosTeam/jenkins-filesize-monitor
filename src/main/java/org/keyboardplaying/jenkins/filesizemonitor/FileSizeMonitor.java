@@ -16,12 +16,19 @@
  */
 package org.keyboardplaying.jenkins.filesizemonitor;
 
+import org.keyboardplaying.jenkins.filesizemonitor.action.FileSizeBuildAction;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Recorder;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.FileSet;
+import org.keyboardplaying.jenkins.filesizemonitor.builder.FileSizeEvaluator;
+import org.keyboardplaying.jenkins.filesizemonitor.model.FileSizeReport;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
@@ -31,31 +38,38 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class FileSizeMonitor extends Recorder {
 
     private static final String PATH_SEPARATOR = ",";
-    private final String paths;
+    private final String pattern;
 
     @DataBoundConstructor
-    public FileSizeMonitor(String paths) {
-        this.paths = paths;
+    public FileSizeMonitor(String pattern) {
+        this.pattern = pattern;
     }
 
-    public String getPaths() {
-        return paths;
+    public String getPattern() {
+        return pattern;
     }
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         PrintStream logger = listener.getLogger();
 
-        logger.println("[Filesize monitor] paths to monitor: ");
-        for (String path : getPaths().split(PATH_SEPARATOR)) {
-            logger.println(" - " + path.trim());
+        logger.println("[Filesize monitor] paths to monitor: " + getPattern());
+
+        FileSizeEvaluator evaluator = new FileSizeEvaluator(getPattern(), logger);
+        FileSizeReport report;
+        try {
+            report = build.getWorkspace().act(evaluator);
+        } catch (IOException e) {
+            e.printStackTrace(logger);
+            return false;
+        } catch (InterruptedException e) {
+            e.printStackTrace(logger);
+            return false;
         }
 
-        // TODO evaluate files size
-        // store file size
-
+        // The report should be used to generate the result
         final FileSizeResult result = new FileSizeResult((int) (Math.random() * 10) + 1, build);
-        build.addAction(new FileSizeAction(result));
+        build.addAction(new FileSizeBuildAction(result));
 
         return true;
     }

@@ -14,43 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.keyboardplaying.jenkins.filesizemonitor;
-
-import hudson.model.Action;
-import java.io.Serializable;
-import org.kohsuke.stapler.StaplerProxy;
+package org.keyboardplaying.jenkins.filesizemonitor.model;
 
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // XXX Javadoc
-// TODO i18n
-public class FileSizeAction implements Action, Serializable, StaplerProxy {
-
-    private static final String URL = "filesize-monitor";
-    private FileSizeResult result;
-
-    public FileSizeAction(FileSizeResult result) {
-        this.result = result;
-    }
-
-    @Override
-    public String getIconFileName() {
-        return "/plugin/filesize-monitor/icons/filesize-24.png";
-    }
-
-    @Override
-    public String getDisplayName() {
-        return "Filesize";
-    }
-
-    @Override
-    public String getUrlName() {
-        return URL;
-    }
-
-    @Override
-    public FileSizeResult getTarget() {
-        return result;
-    }
+public class FileSizeReport {
 }

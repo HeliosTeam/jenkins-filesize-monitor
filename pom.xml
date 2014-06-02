@@ -54,4 +54,15 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <developers>
+        <developer>
+            <id>cyChop</id>
+            <name>Cyrille Chopelet</name>
+        </developer>
+        <developer>
+            <id>AndVic</id>
+            <name>Victor Andrianjafintrimo</name>
+        </developer>
+    </developers>
 </project>
