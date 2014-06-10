@@ -18,23 +18,29 @@ package org.keyboardplaying.jenkins.filesizemonitor;
 
 import hudson.model.AbstractBuild;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Victor Andrianjafintrimo <victor.andrianjafintrimo@cgi.com>
  */
 // XXX Javadoc
 public class FileSizeResult implements Serializable {
 
-    private int random;
+    private Map<String,Double> fileSize;
     private AbstractBuild<?, ?> owner;
 
-    public FileSizeResult(int random, AbstractBuild<?, ?> owner) {
-        this.random = random;
+    public FileSizeResult(Map<String,Double> fileSize, AbstractBuild<?, ?> owner) {
+        this.fileSize= fileSize;
         this.owner = owner;
     }
 
-    public int getRandom() {
-        return random;
+    public Map<String, Double> getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Map<String, Double> fileSize) {
+        this.fileSize = fileSize;
     }
 
     public AbstractBuild<?, ?> getOwner() {

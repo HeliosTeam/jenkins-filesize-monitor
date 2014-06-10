@@ -23,29 +23,40 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Victor Andrianjafintrimo <victor.andrianjafintrimo@cgi.com>
  */
 // XXX Javadoc
 public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
 
     private final String filePattern;
     private transient PrintStream logger;
+    private MultiValueMap filterFiles;
 
     public FileSizeEvaluator(String filePattern, PrintStream logger) {
         this.filePattern = filePattern;
+        
         this.logger = logger;
     }
 
     public FileSizeReport invoke(File workspace, VirtualChannel vc) throws IOException, InterruptedException {
         String[] files = findFiles(workspace);
+        separateFilesByFilter(files);
         logger.println("Matching files: " + Arrays.toString(files));
-
-        return null;
+        logger.println("Workspace :"+workspace.getAbsolutePath());
+        FileSizeReport report = new FileSizeReport(calculateFilesSize(files));
+        report.setFilesSize(calculateFilesSize(files));
+        return report;
     }
 
     private String[] findFiles(File workspace) {
@@ -60,5 +71,20 @@ public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
         } catch (BuildException e) {
             return new String[0];
         }
+    }
+    
+    private void separateFilesByFilter(String[] files){
+       //TODO
+    }
+    
+    private Map<String,Double> calculateFilesSize(String[] filesName) {
+         Set<String> filesSet = new HashSet<String>(Arrays.asList(filesName));
+         Map<String,Double> filesSize = new HashMap<String,Double>();
+        for(String fileName : filesSet) {
+            File file = new File(fileName);
+            double size = file.length();
+                filesSize.put(fileName, size);
+        }
+        return filesSize;
     }
 }

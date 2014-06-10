@@ -5,7 +5,19 @@
     <l:layout norefresh="true">
         <st:include it="${it.owner}" page="sidepanel.jelly" />
         <l:main-panel>
-            Random number: ${it.random}
+           <table border="1px">
+
+                <tr>
+                    <th>File name</th>
+                    <th>File size</th>
+                </tr>
+                <j:forEach items="${it.fileSize}" var="iter">
+                    <tr>
+                        <td>${iter.key}</td>
+                        <td>${iter.value}</td>
+                    </tr>
+                </j:forEach>
+            </table>
         </l:main-panel>
     </l:layout>
 </j:jelly>

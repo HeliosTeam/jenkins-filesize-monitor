@@ -33,6 +33,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Victor Andrianjafintrimo <victor.andrianjafintrimo@cgi.com>
  */
 // XXX Javadoc
 public class FileSizeMonitor extends Recorder {
@@ -56,7 +57,7 @@ public class FileSizeMonitor extends Recorder {
         logger.println("[Filesize monitor] paths to monitor: " + getPattern());
 
         FileSizeEvaluator evaluator = new FileSizeEvaluator(getPattern(), logger);
-        FileSizeReport report;
+        FileSizeReport report ;
         try {
             report = build.getWorkspace().act(evaluator);
         } catch (IOException e) {
@@ -68,7 +69,7 @@ public class FileSizeMonitor extends Recorder {
         }
 
         // The report should be used to generate the result
-        final FileSizeResult result = new FileSizeResult((int) (Math.random() * 10) + 1, build);
+        final FileSizeResult result = new FileSizeResult(report.getFilesSize()/*(int) (Math.random() * 10) + 1*/, build);
         build.addAction(new FileSizeBuildAction(result));
 
         return true;

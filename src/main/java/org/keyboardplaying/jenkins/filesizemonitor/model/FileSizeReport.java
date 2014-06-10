@@ -16,9 +16,46 @@
  */
 package org.keyboardplaying.jenkins.filesizemonitor.model;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import org.apache.commons.collections.map.MultiValueMap;
+
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Victor Andrianjafintrimo <victor.andrianjafintrimo@cgi.com>
  */
 // XXX Javadoc
 public class FileSizeReport {
+    
+    private Map<String,Double> filesSize;
+    private MultiValueMap filterFiles;
+    
+    public FileSizeReport(Map<String,Double> filesSize){
+        this.filesSize = new HashMap<String, Double>();
+    }
+
+
+    public Map<String, Double> getFilesSize() {
+        return filesSize;
+    }
+
+    public void setFilesSize(Map<String, Double> filesSize) {
+        this.filesSize = filesSize;
+    }
+
+    public MultiValueMap getFilterFiles() {
+        return filterFiles;
+    }
+
+    public void setFilterFiles(MultiValueMap filterFiles) {
+        this.filterFiles = filterFiles;
+    }
+    
+    
+    
+    
 }
