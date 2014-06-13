@@ -20,6 +20,8 @@ import org.keyboardplaying.jenkins.filesizemonitor.model.FileSizeReport;
 import hudson.FilePath.FileCallable;
 import hudson.remoting.VirtualChannel;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -27,6 +29,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -54,8 +58,11 @@ public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
         separateFilesByFilter(files);
         logger.println("Matching files: " + Arrays.toString(files));
         logger.println("Workspace :"+workspace.getAbsolutePath());
-        FileSizeReport report = new FileSizeReport(calculateFilesSize(files));
-        report.setFilesSize(calculateFilesSize(files));
+        Map<String,Double> mapFileSize = calculateFilesSize(files,workspace.getAbsolutePath());
+        FileSizeReport report = new FileSizeReport(mapFileSize);
+        double totalSize = getTotalMonitoredSize(mapFileSize);
+        report.setTotalMonitoredSize(totalSize);
+        report.setFilterPattern(filePattern);
         return report;
     }
 
@@ -77,14 +84,22 @@ public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
        //TODO
     }
     
-    private Map<String,Double> calculateFilesSize(String[] filesName) {
+    private Map<String,Double> calculateFilesSize(String[] filesName,String workspace) {
          Set<String> filesSet = new HashSet<String>(Arrays.asList(filesName));
          Map<String,Double> filesSize = new HashMap<String,Double>();
         for(String fileName : filesSet) {
-            File file = new File(fileName);
+            File file = new File(workspace+"/"+fileName);
             double size = file.length();
                 filesSize.put(fileName, size);
-        }
+             }
         return filesSize;
+    }
+
+    private double getTotalMonitoredSize(Map<String, Double> mapFileSize) {
+            double result = 0;
+           for(String fileName : mapFileSize.keySet()){
+               result += mapFileSize.get(fileName);
+           }
+           return result;
     }
 }

@@ -19,6 +19,7 @@ package org.keyboardplaying.jenkins.filesizemonitor;
 import hudson.model.AbstractBuild;
 import java.io.Serializable;
 import java.util.Map;
+import org.keyboardplaying.jenkins.filesizemonitor.model.FileSizeReport;
 
 /**
  * @author Cyrille Chopelet (http://keyboardplaying.org)
@@ -27,20 +28,20 @@ import java.util.Map;
 // XXX Javadoc
 public class FileSizeResult implements Serializable {
 
-    private Map<String,Double> fileSize;
+    private FileSizeReport report;
     private AbstractBuild<?, ?> owner;
-
-    public FileSizeResult(Map<String,Double> fileSize, AbstractBuild<?, ?> owner) {
-        this.fileSize= fileSize;
+    
+    public FileSizeResult(FileSizeReport report, AbstractBuild<?, ?> owner) {
+        this.report= report;
         this.owner = owner;
     }
 
-    public Map<String, Double> getFileSize() {
-        return fileSize;
+    public FileSizeReport getReport() {
+        return report;
     }
 
-    public void setFileSize(Map<String, Double> fileSize) {
-        this.fileSize = fileSize;
+    public void setReport(FileSizeReport report) {
+        this.report = report;
     }
 
     public AbstractBuild<?, ?> getOwner() {

@@ -5,16 +5,26 @@
     <l:layout norefresh="true">
         <st:include it="${it.owner}" page="sidepanel.jelly" />
         <l:main-panel>
+        <h1>File Size Monitor</h1>
+         <br></br>
+         <br></br>
+         <br></br>
+        <h3>Filter pattern : </h3>${it.report.filterPattern}
+         <br></br>
+        <h3>Total monitored size:</h3>${it.report.totalMonitoredSize}
+            <br></br>
+             <br></br>
+           <h3>Matching files</h3>
            <table border="1px">
 
                 <tr>
                     <th>File name</th>
                     <th>File size</th>
                 </tr>
-                <j:forEach items="${it.fileSize}" var="iter">
+                <j:forEach items="${it.report.filesSize}" var="iter">
                     <tr>
                         <td>${iter.key}</td>
-                        <td>${iter.value}</td>
+                        <td>${iter.value} Ko</td>
                     </tr>
                 </j:forEach>
             </table>

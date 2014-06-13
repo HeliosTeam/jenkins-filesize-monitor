@@ -32,11 +32,16 @@ import org.apache.commons.collections.map.MultiValueMap;
 public class FileSizeReport {
     
     private Map<String,Double> filesSize;
+    //The map of file of one filter pattern
     private MultiValueMap filterFiles;
+    private String filterPattern;
+    private double totalMonitoredSize;
     
     public FileSizeReport(Map<String,Double> filesSize){
         this.filesSize = new HashMap<String, Double>();
     }
+    
+    public FileSizeReport(){}
 
 
     public Map<String, Double> getFilesSize() {
@@ -54,6 +59,24 @@ public class FileSizeReport {
     public void setFilterFiles(MultiValueMap filterFiles) {
         this.filterFiles = filterFiles;
     }
+
+    public String getFilterPattern() {
+        return filterPattern;
+    }
+
+    public void setFilterPattern(String filterPattern) {
+        this.filterPattern = filterPattern;
+    }
+
+    public void setTotalMonitoredSize(double totalSize) {
+        this.totalMonitoredSize = totalSize;
+    }
+    
+    public double getTotalMonitoredSize(){
+        return this.totalMonitoredSize;
+    }
+    
+    
     
     
     
