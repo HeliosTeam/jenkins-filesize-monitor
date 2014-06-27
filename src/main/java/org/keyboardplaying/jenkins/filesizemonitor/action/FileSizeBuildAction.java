@@ -29,6 +29,7 @@ import org.kohsuke.stapler.StaplerProxy;
 public class FileSizeBuildAction implements Action, Serializable, StaplerProxy {
 
     private static final String URL = "filesize-monitor";
+    private static final String ICON_URL_PREFIX = "/plugin/filesize-monitor/icons/";
     private FileSizeResult result;
 
     public FileSizeBuildAction(FileSizeResult result) {
@@ -37,8 +38,9 @@ public class FileSizeBuildAction implements Action, Serializable, StaplerProxy {
 
     @Override
     public String getIconFileName() {
-        return "/plugin/filesize-monitor/icons/filesize-24.png";
+        return ICON_URL_PREFIX+"filesize-24.png";
     }
+    
 
     @Override
     public String getDisplayName() {

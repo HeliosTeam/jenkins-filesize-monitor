@@ -47,9 +47,10 @@ public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
     private transient PrintStream logger;
     private MultiValueMap filterFiles;
 
+
     public FileSizeEvaluator(String filePattern, PrintStream logger) {
         this.filePattern = filePattern;
-
+ 
         this.logger = logger;
     }
 

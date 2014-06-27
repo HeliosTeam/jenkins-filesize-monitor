@@ -24,7 +24,15 @@
                 <j:forEach items="${it.getReport().getFilesSize()}" var="iter">
                     <tr>
                         <td>${iter.key}</td>
-                        <td>${it.humanReadableByteCount(iter.value)}</td>
+                         <j:set var="fileSize" value="${it.humanReadableByteCount(iter.value)}" />
+                         <j:choose>
+                            <j:when test="${it.fileTooBig(iter.key)}">
+                                <td bgcolor="RED">${fileSize}</td>
+                            </j:when>
+                            <j:otherwise>
+                                <td>${fileSize}</td>
+                            </j:otherwise>
+                         </j:choose>
                     </tr>
                 </j:forEach>
             </table>

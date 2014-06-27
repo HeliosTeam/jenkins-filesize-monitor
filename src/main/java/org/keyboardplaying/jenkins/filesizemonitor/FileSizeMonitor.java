@@ -40,14 +40,20 @@ public class FileSizeMonitor extends Recorder {
 
     private static final String PATH_SEPARATOR = ",";
     private final String pattern;
+    private final int maxSize;
 
     @DataBoundConstructor
-    public FileSizeMonitor(String pattern) {
+    public FileSizeMonitor(String pattern, String maxSize) {
         this.pattern = pattern;
+        this.maxSize = Integer.parseInt(maxSize);
     }
 
     public String getPattern() {
         return pattern;
+    }
+    
+    public int getMaxSize(){
+        return maxSize;
     }
 
     @Override
@@ -69,7 +75,7 @@ public class FileSizeMonitor extends Recorder {
         }
 
         // The report should be used to generate the result
-        final FileSizeResult result = new FileSizeResult(report, build,logger);
+        final FileSizeResult result = new FileSizeResult(report, build,logger,getMaxSize());
         build.addAction(new FileSizeBuildAction(result));
 
         return true;
