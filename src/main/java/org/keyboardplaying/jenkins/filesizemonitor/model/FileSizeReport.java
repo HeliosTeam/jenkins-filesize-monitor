@@ -38,7 +38,7 @@ public class FileSizeReport {
     private double totalMonitoredSize;
     
     public FileSizeReport(Map<String,Double> filesSize){
-        this.filesSize = new HashMap<String, Double>();
+        this.filesSize = filesSize;
     }
     
     public FileSizeReport(){}

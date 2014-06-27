@@ -17,6 +17,7 @@
 package org.keyboardplaying.jenkins.filesizemonitor;
 
 import hudson.model.AbstractBuild;
+import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.Map;
 import org.keyboardplaying.jenkins.filesizemonitor.model.FileSizeReport;
@@ -30,10 +31,12 @@ public class FileSizeResult implements Serializable {
 
     private FileSizeReport report;
     private AbstractBuild<?, ?> owner;
-    
-    public FileSizeResult(FileSizeReport report, AbstractBuild<?, ?> owner) {
-        this.report= report;
+    private transient PrintStream logger;
+
+    public FileSizeResult(FileSizeReport report, AbstractBuild<?, ?> owner,PrintStream logger) {
+        this.report = report;
         this.owner = owner;
+        this.logger = logger;
     }
 
     public FileSizeReport getReport() {
@@ -47,4 +50,15 @@ public class FileSizeResult implements Serializable {
     public AbstractBuild<?, ?> getOwner() {
         return owner;
     }
+
+    public String humanReadableByteCount(double bytes) {
+        int unit = 1024;
+        if (bytes < unit) {
+            return bytes + " B";
+        }
+        int exp = (int) (Math.log(bytes) / Math.log(unit));
+        String pre = "KMGTPE".charAt(exp - 1)+"";
+        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+    }
+
 }

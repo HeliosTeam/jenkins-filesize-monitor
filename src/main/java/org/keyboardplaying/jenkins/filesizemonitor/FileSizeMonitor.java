@@ -69,7 +69,7 @@ public class FileSizeMonitor extends Recorder {
         }
 
         // The report should be used to generate the result
-        final FileSizeResult result = new FileSizeResult(report, build);
+        final FileSizeResult result = new FileSizeResult(report, build,logger);
         build.addAction(new FileSizeBuildAction(result));
 
         return true;

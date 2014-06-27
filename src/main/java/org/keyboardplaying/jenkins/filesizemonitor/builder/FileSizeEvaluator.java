@@ -49,16 +49,16 @@ public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
 
     public FileSizeEvaluator(String filePattern, PrintStream logger) {
         this.filePattern = filePattern;
-        
+
         this.logger = logger;
     }
 
     public FileSizeReport invoke(File workspace, VirtualChannel vc) throws IOException, InterruptedException {
         String[] files = findFiles(workspace);
         separateFilesByFilter(files);
-        logger.println("Matching files: " + Arrays.toString(files));
-        logger.println("Workspace :"+workspace.getAbsolutePath());
-        Map<String,Double> mapFileSize = calculateFilesSize(files,workspace.getAbsolutePath());
+//        logger.println("Matching files: " + Arrays.toString(files));
+        logger.println("Workspace :" + workspace.getAbsolutePath());
+        Map<String, Double> mapFileSize = calculateFilesSize(files, workspace.getAbsolutePath());
         FileSizeReport report = new FileSizeReport(mapFileSize);
         double totalSize = getTotalMonitoredSize(mapFileSize);
         report.setTotalMonitoredSize(totalSize);
@@ -79,27 +79,29 @@ public class FileSizeEvaluator implements FileCallable<FileSizeReport> {
             return new String[0];
         }
     }
-    
-    private void separateFilesByFilter(String[] files){
-       //TODO
+
+    private void separateFilesByFilter(String[] files) {
+        //TODO
     }
-    
-    private Map<String,Double> calculateFilesSize(String[] filesName,String workspace) {
-         Set<String> filesSet = new HashSet<String>(Arrays.asList(filesName));
-         Map<String,Double> filesSize = new HashMap<String,Double>();
-        for(String fileName : filesSet) {
-            File file = new File(workspace+"/"+fileName);
+
+    private Map<String, Double> calculateFilesSize(String[] filesName, String workspace) {
+        Set<String> filesSet = new HashSet<String>(Arrays.asList(filesName));
+        Map<String, Double> filesSize = new HashMap<String, Double>();
+        for (String fileName : filesSet) {
+            File file = new File(workspace + "/" + fileName);
             double size = file.length();
-                filesSize.put(fileName, size);
-             }
+            filesSize.put(fileName, size);
+//            logger.println("Record added to map: [" + fileName + " => " + size + "]");
+        }
         return filesSize;
     }
 
     private double getTotalMonitoredSize(Map<String, Double> mapFileSize) {
-            double result = 0;
-           for(String fileName : mapFileSize.keySet()){
-               result += mapFileSize.get(fileName);
-           }
-           return result;
+        double result = 0;
+        for (String fileName : mapFileSize.keySet()) {
+            result += mapFileSize.get(fileName);
+        }
+        return result;
     }
+
 }

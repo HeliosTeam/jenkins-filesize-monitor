@@ -11,20 +11,20 @@
          <br></br>
         <h3>Filter pattern : </h3>${it.report.filterPattern}
          <br></br>
-        <h3>Total monitored size:</h3>${it.report.totalMonitoredSize}
+         <j:set var="mapSize" value="${it.getReport().getTotalMonitoredSize()}" />
+        <h3>Total monitored size:</h3>${it.humanReadableByteCount(mapSize)}
             <br></br>
              <br></br>
            <h3>Matching files</h3>
            <table border="1px">
-
                 <tr>
                     <th>File name</th>
                     <th>File size</th>
                 </tr>
-                <j:forEach items="${it.report.filesSize}" var="iter">
+                <j:forEach items="${it.getReport().getFilesSize()}" var="iter">
                     <tr>
                         <td>${iter.key}</td>
-                        <td>${iter.value} Ko</td>
+                        <td>${it.humanReadableByteCount(iter.value)}</td>
                     </tr>
                 </j:forEach>
             </table>
