@@ -45,7 +45,7 @@ public class FileSizeMonitor extends Recorder {
     @DataBoundConstructor
     public FileSizeMonitor(String pattern, String maxSize) {
         this.pattern = pattern;
-        this.maxSize = Integer.parseInt(maxSize);
+        this.maxSize = maxSize.isEmpty()?0:Integer.parseInt(maxSize);
     }
 
     public String getPattern() {
@@ -59,7 +59,7 @@ public class FileSizeMonitor extends Recorder {
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         PrintStream logger = listener.getLogger();
-
+        logger.println("File size monitor started");
         logger.println("[Filesize monitor] paths to monitor: " + getPattern());
 
         FileSizeEvaluator evaluator = new FileSizeEvaluator(getPattern(), logger);

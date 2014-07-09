@@ -29,6 +29,7 @@ import org.keyboardplaying.jenkins.filesizemonitor.model.FileSizeReport;
 // XXX Javadoc
 public class FileSizeResult implements Serializable {
     private int maxSize;
+    private boolean hasLimitSize;
     private FileSizeReport report;
     private AbstractBuild<?, ?> owner;
     private transient PrintStream logger;
@@ -38,6 +39,7 @@ public class FileSizeResult implements Serializable {
         this.owner = owner;
         this.logger = logger;
         this.maxSize = maxSize;
+        this.hasLimitSize = maxSize>0;
     }
 
     public FileSizeReport getReport() {
@@ -48,12 +50,38 @@ public class FileSizeResult implements Serializable {
         this.report = report;
     }
 
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    public boolean hasLimitSize() {
+        return hasLimitSize;
+    }
+
+    public void setHasLimitSize(boolean hasLimitSize) {
+        this.hasLimitSize = hasLimitSize;
+    }
+    
     public AbstractBuild<?, ?> getOwner() {
         return owner;
     }
+    
+    public int getOverSizedFiles(){
+        int res = 0;
+        for(String key :report.getFilesSize().keySet()){
+            if(report.getFilesSize().get(key)>maxSize){
+                res++;
+            }
+        }
+        return res;
+    }
 
     public boolean fileTooBig(String fileName){
-        return report.getFilesSize().get(fileName) > maxSize;
+        return report.getFilesSize().get(fileName) > maxSize && hasLimitSize;
     }
     
     public String humanReadableByteCount(double bytes) {

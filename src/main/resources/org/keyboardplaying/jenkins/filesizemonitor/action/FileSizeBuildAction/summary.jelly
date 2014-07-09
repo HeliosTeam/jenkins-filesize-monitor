@@ -1,0 +1,24 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+xmlns:f="/lib/form" xmlns:i="jelly:fmt"> 
+ 
+<t:summary icon="/plugin/filesize-monitor/icons/filesize-48.png">
+    <j:set var="mapSize" value="${it.getResult().getReport().getTotalMonitoredSize()}" />
+    <table>
+        <tr>
+            <td>${%BuildScreen.total_monitored}:</td>
+            <td>${it.getResult().humanReadableByteCount(mapSize)}</td>
+        </tr>
+        <tr>
+            <td>${%BuildScreen.total_analysed}:</td>
+            <td><a href="${it.getUrlName()}">${it.getResult().getReport().getFilesSize().size()} ${%BuildScreen.files}</a></td>
+        </tr>
+         <j:if test="${it.getResult().hasLimitSize()}">
+            <tr>
+                <td>${%BuildScreen.number_of_files} ${it.getResult().humanReadableByteCount(it.getResult().getMaxSize())}:</td>
+                <td>${it.getResult().getOverSizedFiles()} ${%BuildScreen.files}</td>
+            </tr>
+        </j:if>    
+    </table>
+    </t:summary>
+</j:jelly>
