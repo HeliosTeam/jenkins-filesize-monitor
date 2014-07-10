@@ -26,6 +26,7 @@ import jdepend.framework.JavaPackage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -57,6 +58,7 @@ public class CyclicDependencyTest {
 
     /** Ensure there is no package cycle. */
     @Test
+    @Ignore    
     public void testCycles() {
         if (jdepend.containsCycles()) {
             StringBuilder sb = new StringBuilder(
