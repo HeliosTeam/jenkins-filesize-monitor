@@ -10,7 +10,7 @@
 
     <groupId>org.keyboardplaying.jenkins</groupId>
     <artifactId>filesize-monitor</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>hpi</packaging>
   
     <name>Filesize monitor</name>
