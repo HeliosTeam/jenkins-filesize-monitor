@@ -10,7 +10,7 @@
 
     <groupId>org.keyboardplaying.jenkins</groupId>
     <artifactId>filesize-monitor</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>hpi</packaging>
   
     <name>Filesize monitor</name>
@@ -31,7 +31,7 @@
         <url>https://github.com/cyChop/jenkins-filesize-monitor</url>
         <connection>scm:git:${basedir}</connection>
         <developerConnection>scm:git:${basedir}</developerConnection>
-      <tag>filesize-monitor-0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <repositories>
