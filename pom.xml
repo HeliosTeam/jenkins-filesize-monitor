@@ -27,6 +27,12 @@
         </license>
     </licenses>
 
+    <scm>
+        <url>https://github.com/cyChop/jenkins-filesize-monitor</url>
+        <connection>scm:git:${basedir}</connection>
+        <developerConnection>scm:git:${basedir}</developerConnection>
+    </scm>
+
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
